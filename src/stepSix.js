@@ -1,3 +1,21 @@
+/**reconcile其实就是虚拟DOM树的diff操作，
+ * https://juejin.cn/post/7020239613000155150
+ * 需要删除不需要的节点，更新修改过的节点，
+ * 添加新的节点。为了在中断后能回到工作位置，
+ * 我们还需要一个变量currentRoot，然后在fiber节点里面添加一个属性alternate，
+ * 这个属性指向上一次运行的根节点，也就是currentRoot。currentRoot会在第一次render后的commit阶段赋值，
+ * 也就是每次计算完后都会把当次状态记录在alternate上，后面更新了就可以把alternate拿出来跟新的状态做diff。
+ * 然后performUnitOfWork里面需要添加调和子元素的代码，可以新增一个函数reconcileChildren
+ */
+
+
+/**
+ * 如果新老节点类型一样，复用老节点DOM，更新props
+如果类型不一样，而且新的节点存在，创建新节点替换老节点
+如果类型不一样，没有新节点，有老节点，删除老节点
+ */
+//删除老节点其实就是加上一个删除标记
+//同时用一个全局变量deletions记录所有需要删除的节点
 /** @jsxRuntime classic */
 export default () => {
   function createElement(type, props, ...children) {
@@ -31,13 +49,18 @@ export default () => {
 
     return dom;
   }
-
+//只处理以on开头
   const isEvent = (key) => key.startsWith("on");
   const isProperty = (key) => key !== "children" && !isEvent(key);
   const isNew = (prev, next) => (key) => prev[key] !== next[key];
   const isGone = (next) => (key) => !(key in next);
 
+  //updateDom的代码写的比较简单，事件只处理了简单的on开头的，兼容性也有问题，prevProps和nextProps可能会遍历到相同的属性，有重复赋值，但是总体原理还是没错的
   function updateDom(dom, prevProps, nextProps) {
+
+    // 1. 过滤children属性
+  // 2. 老的存在，新的没了，取消
+  // 3. 新的存在，老的没有，新增
     // 移除旧事件
     Object.keys(prevProps)
       .filter(isEvent)
@@ -84,6 +107,8 @@ export default () => {
     wipRoot = null;
   }
 
+
+  //然后就是在commit阶段处理真正的DOM操作，具体的操作是根据我们的effectTag来判断的
   function commitWork(fiber) {
     // child和sibling可能为undefined
     if (!fiber) {
@@ -185,8 +210,7 @@ export default () => {
     let oldFiber = wipFiber.alternate && wipFiber.alternate.child;
     let prevSibling = null;
 
-    // TODO 思考：为什么不能用 oldFiber !== null
-    // oldFiber一直为undefined，会造成死循环
+    
     while (index < elements.length || oldFiber != null) {
       const element = elements[index];
       let newFiber = null;
@@ -194,25 +218,26 @@ export default () => {
       const sameType = oldFiber && element && element.type == oldFiber.type;
 
       // 更新
+       // 如果类型一样，复用节点，更新props
       if (sameType) {
         newFiber = {
           type: oldFiber.type,
           props: element.props,
           dom: oldFiber.dom,
           parent: wipFiber,
-          alternate: oldFiber,
+          alternate: oldFiber,//记录老状态
           effectTag: "UPDATE",
         };
       }
 
-      // 重新创建
+      // 如果类型不一样，有新的节点，创建新节点替换老节点
       if (element && !sameType) {
         newFiber = {
           type: element.type,
           props: element.props,
           dom: null,
           parent: wipFiber,
-          alternate: null,
+          alternate: null,//新增的没有老节点
           effectTag: "PLACEMENT",
         };
       }

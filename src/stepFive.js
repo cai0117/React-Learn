@@ -1,3 +1,9 @@
+/**上面我们的performUnitOfWork一边构建Fiber结构一边操作DOMappendChild，
+ * 这样如果某次更新好几个节点，操作了第一个节点之后就中断了，
+ * 那我们可能只看到第一个节点渲染到了页面，后续几个节点等浏览器空了才陆续渲染
+ * 将DOM操作都搜集起来，最后统一执行
+ */
+
 /** @jsxRuntime classic */
 export default () => {
   function createElement(type, props, ...children) {
@@ -50,6 +56,7 @@ export default () => {
       return;
     }
     const domParent = fiber.parent.dom;
+    //挂载到dom上
     domParent.appendChild(fiber.dom);
     commitWork(fiber.child);
     commitWork(fiber.sibling);
@@ -76,7 +83,7 @@ export default () => {
       // 通过剩余时间判断是否需要立刻交还执行权
       shouldYield = deadline.timeRemaining() < 1;
     }
-
+    //全部执行完就提交
     if (!nextUnitOfWork && wipRoot) {
       commitRoot();
     }

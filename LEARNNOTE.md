@@ -107,14 +107,11 @@ function createTextElement(text) {
 }
 ```
 
-想要使用我们自己的函数处理 JSX，需要配置 tsconfig.json，如果有必要关闭一些检查。
+想要使用我们自己的函数处理 JSX，需要配置注释。
 
 ```json
-{
-  "compilerOptions": {
-    "jsxFactory": "Didact.createElement"
-  }
-}
+/** @jsxRuntime classic */ //jsx运行时编译本地
+ /** @jsx Didact.createElement */ //告诉babel用我们自己创建的库
 ```
 
 2. render()：渲染节点对象到 DOM

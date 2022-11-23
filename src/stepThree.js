@@ -42,6 +42,14 @@ export default () => {
     container.appendChild(dom);
   }
 
+ /**
+  * React的diff算法是经过优化的，但是他却是同步的，
+  * renderer负责操作DOM的appendChild等API也是同步的，也就是说如果有大量节点需要更新
+  * ，JS线程的运行时间可能会比较长，在这段时间浏览器是不会响应其他事件的，因为JS线程和GUI线程是互斥的，
+  * JS运行时页面就不会响应，这个时间太长了，用户就可能看到卡顿，特别是动画的卡顿会很明显
+  * */
+ //https://juejin.cn/post/6844904197008130062#heading-5
+  //实现reconsiler(diff算法)
   let nextUnitOfWork = null;
 
   function workLoop(deadline) {

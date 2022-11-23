@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     
+
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="title">Title</h1>
+    <div id="container"></div>
+    <!-- 引入react核心库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作dom -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.20.4/babel.min.js"></script>
+    <script type="text/babel">
+        const VDOM = (<h1 id="title">Title</h1>)
+        const TDOM = document.getElementById("title")
+        ReactDOM.createRoot(document.getElementById("container")).render(VDOM)
+        console.log("虚拟dom",VDOM);
+        debugger;
+        console.log("真实dom",TDOM);
+    </script>
+</body>
+</html>
