@@ -30,6 +30,7 @@ function schedule() {
 
 // 作用：创建 update，并将 update 连成一条环状链表
  // 这样我们在调用 useState 中，才能从 hook.queue.pending 中取到这条环状链表
+ //enqueueRenderPhaseUpdate
 function dispatchAction(queue, action) {
   const update = {
     action,
@@ -73,6 +74,7 @@ function useState(initialState) {
       fiber.memoizedState = hook;
     } else {
       workInProgressHook.next = hook;
+      
     }
     // 移动workInProgressHook指针
     workInProgressHook = hook; 
@@ -92,8 +94,6 @@ function useState(initialState) {
   if (hook.queue.pending) {
     // 获取update环状单向链表中第一个update
     let firstUpdate = hook.queue.pending.next;
-
-
     // 遍历链表
     do {
       // 执行update action
