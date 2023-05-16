@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* +表示相邻  */
+      p + p {
+        font-size: 20px;
+        padding: 10px 15px 15px 5px;
+        /* 上右下左 */
+      }
+      /* link表示未访问，visited表示访问过  */
+      a:link {
+        color: pink;
+      }
+      a:visited {
+        color: green;
+      }
+      /* 用来选择任何未通过验证的 <form>、<fieldset>、<input> 或其他表单元素。 */
+        /* ~为通用兄弟选择器并匹配第二个选择器的所有迭代元素，位置无须紧邻于第一个元素，只须有相同的父级元素。 */
+      input:invalid ~ input0{
+        background-color: ivory;
+        border: none;
+        outline: 2px solid red;
+        border-radius: 5px;
+      }
+      /* 一个类被描述为比元素选择器更具体，或者具有更多的特异性，所以它获胜了。类选择器比元素选择器有高优先级 */
+    </style>
+  </head>
+  <body>
+    
+    <!-- <button>Update</button>
+    <canvas></canvas> -->
+    <img src="https://paipai-quick-test-1312487572.cos.ap-shanghai.myqcloud.com/2023/04/11/9b788fda9683296b78228362bbe7a087/2300000096/DSC07035.JPG.FTP-PREVIEW-NW?q-sign-algorithm=sha1&q-ak=AKIDkJdhU0FDuKVP2OTbXDcldEYbNt74lBKC&q-sign-time=1681378363%3B1681554763&q-key-time=1681378363%3B1681554763&q-header-list=host&q-url-param-list=&q-signature=e34269457c4e0771031311cafedc9719d86cae62"/>
+    <form>
+      <div class="field">
+        <label for="url_input">输入一个 URL：</label>
+        <input type="url" id="url_input" />
+      </div>
+
+      <div class="field">
+        <label for="email_input">输入一个电子邮件地址：</label>
+        <input type="email" id="email_input" required />
+      </div>
+    </form>
+
+    <a href="https://www.baidu.com">1</a>
+    <u>nasi goreng</u>
+    C<sub>8</sub>H<sup>2</sup>
+    <time datetime="2016-01-20">2016 年 1 月 20 日</time>
+    <pre><code>const para = document.querySelector('p');
+
+      para.onclick = function() {
+        alert('噢，噢，噢，别点我了。');
+      }</code></pre>
+    <p>在上述的 JavaScript 示例中，<var>para</var> 表示一个段落元素。</p>
+
+    <p>按 <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>A</kbd> 选择全部内容。</p>
+
+    <pre>$ <kbd>ping mozilla.org</kbd>
+      <samp>PING mozilla.org (63.245.215.20): 56 data bytes
+      64 bytes from 63.245.215.20: icmp_seq=0 ttl=40 time=158.233 ms</samp></pre>
+    <p id="p1" draggable="true" ondragstart="dragstart_handler(event)">
+      This element is draggable.
+    </p>
+    <header>
+      <!-- 本站所有网页的统一主标题 -->
+      <h1>聆听电子天籁之音</h1>
+    </header>
+
+    <nav>
+      <!-- 本站统一的导航栏 -->
+      <ul>
+        <li><a href="#">主页</a></li>
+        <!-- 共 n 个导航栏项目，省略…… -->
+      </ul>
+
+      <form>
+        <!-- 搜索栏是站点内导航的一个非线性的方式。 -->
+        <input type="search" name="q" placeholder="要搜索的内容" />
+        <input type="submit" value="搜索" />
+      </form>
+    </nav>
+
+    <main>
+      <!-- 网页主体内容 -->
+      <article>
+        <!-- 此处包含一个 article（一篇文章），内容略…… -->
+      </article>
+
+      <aside>
+        <!-- 侧边栏在主内容右侧 -->
+        <h2>相关链接</h2>
+        <ul>
+          <li><a href="#">这是一个超链接</a></li>
+          <!-- 侧边栏有 n 个超链接，略略略…… -->
+        </ul>
+      </aside>
+    </main>
+
+    <footer>
+      <!-- 本站所有网页的统一页脚 -->
+      <p>© 2050 某某保留所有权利</p>
+    </footer>
+    <div
+      id="target"
+      ondrop="drop_handler(event)"
+      ondragover="dragover_handler(event)"
+    >
+      Drop Zone
+    </div>
+    <figure>
+      <img
+        src="https://raw.githubusercontent.com/mdn/learning-area/master/html/multimedia-and-embedding/images-in-html/dinosaur_small.jpg"
+        alt="一只恐龙头部和躯干的骨架，它有一个巨大的头，长着锋利的牙齿。"
+        width="200"
+        height="171"
+      />
+      <figcaption>曼彻斯特大学博物馆展出的一只霸王龙的化石</figcaption>
+    </figure>
+    <video
+      controls
+      width="400"
+      height="400"
+      autoplay
+      loop
+      muted
+      poster="poster.png"
+    >
+      <source src="rabbit320.mp4" type="video/mp4" />
+      <source src="rabbit320.webm" type="video/webm" />
+      <p>
+        你的浏览器不支持 HTML5 视频。可点击<a href="rabbit320.mp4">此链接</a
+        >观看
+      </p>
+    </video>
+    <svg width="300" height="200">
+      <circle cx="150" cy="100" r="90" fill="blue" />
+    </svg>
+    <audio controls>
+      <source src="viper.mp3" type="audio/mp3" />
+      <source src="viper.ogg" type="audio/ogg" />
+      <p>
+        你的浏览器不支持 HTML5 音频，可点击<a href="viper.mp3">此链接</a>收听。
+      </p>
+    </audio>
+    
+
+    <script>
+      var myNotification = new Notification('Hello!');
+      myNotification();
+      // const btn = document.querySelector("button");
+      // const canvas = document.querySelector("canvas");
+      // const ctx = canvas.getContext("2d");
+
+      // let WIDTH = document.documentElement.clientWidth;
+      // let HEIGHT = document.documentElement.clientHeight;
+
+      // canvas.height = HEIGHT;
+      // canvas.width = WIDTH;
+
+      // function random(number) {
+      //   return Math.floor(Math.random() * number);
+      // }
+      // function displayMessage(){
+      //     const html = document.querySelector('html');
+
+      //     const panel = document.createElement('div');
+      //     panel.setAttribute('class', 'msgBox');
+      //     html.appendChild(panel);
+
+      //     const msg = document.createElement('p');
+      //     msg.textContent = 'This is a message';
+      //     panel.appendChild(msg);
+
+      //     const closeButton = document.createElement('button');
+      //     closeButton.textContent = 'x';
+      //     panel.appendChild(closeButton);
+
+      //     closeButton.onclick = function(){
+      //         panel.parentNode.removeChild(panel)
+      //     }
+      // }
+      // displayMessage()
+
+      // function draw() {
+      //   ctx.clearRect(0, 0, WIDTH, HEIGHT);
+      //   for (let i = 0; i < 100; i++) {
+      //     ctx.beginPath();
+      //     ctx.fillStyle = "rgba(255,0,0,0.5)";
+      //     ctx.arc(random(WIDTH), random(HEIGHT), random(50), 0, 2 * Math.PI);
+      //     ctx.fill();
+      //   }
+      // }
+      // btn.addEventListener("click", draw);
+      const mediaElem = document.querySelector("video");
+      mediaElem.audioTracks.onaddtrack = function (event) {
+        audioTrackAdded(event.track);
+      };
+      let passiveSupported = false;
+
+      function dragstart_handler(ev) {
+        // A将目标元素的 id 添加到数据传输对象
+        ev.dataTransfer.setData("application/my-app", ev.target.id);
+        ev.dataTransfer.effectAllowed = "move";
+      }
+      function dragover_handler(ev) {
+        ev.preventDefault();
+        ev.dataTransfer.dropEffect = "move";
+      }
+      function drop_handler(ev) {
+        ev.preventDefault();
+        // 获取目标的 id 并将已移动的元素添加到目标的 DOM 中
+        const data = ev.dataTransfer.getData("application/my-app");
+        ev.target.appendChild(document.getElementById(data));
+      }
+
+      // try {
+      //   const options = {
+      //     get passive() {
+      //       // 该函数会在浏览器尝试访问 passive 值时被调用。
+      //       passiveSupported = true;
+      //       return false;
+      //     },
+      //   };
+
+      //   window.addEventListener("test", null, options);
+      //   window.removeEventListener("test", null, options);
+      // } catch (err) {
+      //   passiveSupported = false;
+      // }
+
+      // 然后，当你想实际创建一个是否支持 options 的事件侦听器时，你可以这样做：
+
+      // someElement.addEventListener(
+      //   "mouseup",
+      //   handleMouseUp,
+      //   passiveSupported ? { passive: true } : false
+      // );
+    </script>
+  </body>
+</html>
