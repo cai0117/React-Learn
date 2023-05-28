@@ -167,21 +167,23 @@
           }
         }
         setControls() {
-          window.onkeydown = (e) => {
-            switch (e.key) {
-              case "ArrowLeft":
-                this.x -= this.velX;
-                break;
-              case "ArrowRight":
-                this.x += this.velX;
-                break;
-              case "ArrowUp":
-                this.y -= this.velY;
-                break;
-              case "ArrowDown":
-                this.y += this.velY;
-                break;
-            }
+          window.onmousemove = (e) => {
+            this.x = e.pageX;
+            this.y = e.pageY;
+            // switch (e.key) {
+            //   case "ArrowLeft":
+            //     this.x -= this.velX;
+            //     break;
+            //   case "ArrowRight":
+            //     this.x += this.velX;
+            //     break;
+            //   case "ArrowUp":
+            //     this.y -= this.velY;
+            //     break;
+            //   case "ArrowDown":
+            //     this.y += this.velY;
+            //     break;
+            // }
           };
         }
         collisionDetect(balls) {

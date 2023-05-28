@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>fieldset and legend example</title>
+    <style>
+        input.custom{
+            caret-color: red;
+            appearance: none;
+        }
+    </style>
+  </head>
+
+  <body>
+    <form>
+      <fieldset>
+        <legend>Fruit juice size</legend>
+        <p>
+          <input type="radio" name="size" id="size_1" value="small" />
+          <label for="size_1">Small</label>
+        </p>
+        <p>
+          <input type="radio" name="size" id="size_2" value="medium" />
+          <label for="size_2">Medium</label>
+        </p>
+        <p>
+          <input type="radio" name="size" id="size_3" value="large" />
+          <label for="size_3">Large</label>
+        </p>
+      </fieldset>
+      <p>
+        <input type="checkbox" id="taste_1" name="taste_cherry" value="1" />
+        <label for="taste_1">I like cherry</label>
+      </p>
+      <p>
+        <input type="checkbox" id="taste_2" name="taste_banana" value="2" />
+        <label for="taste_2">I like banana</label>
+      </p>
+      <div>
+        <label for="username"><abbr title="required">*</abbr>Name: </label>
+        <input id="username" type="text" name="username" />
+      </div>
+    </form>
+    <input type="date" step="7" />
+    <label for="textInput">请注意红色光标：</label>
+    <input id="textInput" class="custom" size="32" />
+  </body>
+</html>
