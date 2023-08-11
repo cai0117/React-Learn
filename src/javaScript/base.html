@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        width: 100%;
+        height: 100vh;
+      }
+      #canvas {
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="800" height="800"></canvas>
+    <script>
+      let isDown = false;
+      let points = [];
+      let rects = [];
+      let ellipse = [];
+      let beginPoint = null;
+      const canvas = document.querySelector("#canvas");
+      const ctx = canvas.getContext("2d");
+
+      // 设置线条颜色
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 1;
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+
+      canvas.addEventListener("mousedown", down, false);
+      canvas.addEventListener("mousemove", move, false);
+      canvas.addEventListener("mouseup", up, false);
+      canvas.addEventListener("mouseout", up, false);
+
+      function down(evt) {
+        isDown = true;
+        const { x, y } = getPos(evt);
+        points.push({ x, y });
+        beginPoint = { x, y };
+      }
+
+      function move(evt) {
+        if (!isDown) return;
+
+        const { x, y } = getPos(evt);
+        points.push({ x, y });
+
+        // if (points.length > 3) {
+        //   const lastTwoPoints = points.slice(-2);
+        //   const controlPoint = lastTwoPoints[0];
+        //   const endPoint = {
+        //     x: (lastTwoPoints[0].x + lastTwoPoints[1].x) / 2,
+        //     y: (lastTwoPoints[0].y + lastTwoPoints[1].y) / 2,
+        //   };
+        //   drawLine(beginPoint, controlPoint, endPoint);
+        //   beginPoint = endPoint;
+        // }
+        // const width = x - beginPoint.x;
+        // const height = y - beginPoint.y;
+        // drawRect(beginPoint, width, height);
+        const width = Math.abs((x - beginPoint.x) / 2);
+        const height = Math.abs((y - beginPoint.y) / 2);
+        const ellX = (beginPoint.x + x) / 2;
+        const ellY = (beginPoint.y + y) / 2;
+        drawEllipse({ x: ellX, y: ellY }, width, height);
+      }
+
+      function up(evt) {
+        if (!isDown) return;
+        const { x, y } = getPos(evt);
+
+        // if (points.length > 3) {
+        //   const lastTwoPoints = points.slice(-2);
+        //   const controlPoint = lastTwoPoints[0];
+        //   const endPoint = lastTwoPoints[1];
+        //   drawLine(beginPoint, controlPoint, endPoint);
+        // }
+        // const width = x - beginPoint.x;
+        // const height = y - beginPoint.y;
+        // rects.push({
+        //   ...beginPoint,
+        //   width,
+        //   height,
+        // });
+        const width = Math.abs((x - beginPoint.x) / 2);
+        const height = Math.abs((y - beginPoint.y) / 2);
+        const ellX = (beginPoint.x + x) / 2;
+        const ellY = (beginPoint.y + y) / 2;
+        ellipse.push({
+          x: ellX,
+          y: ellY,
+          width,
+          height,
+        });
+        beginPoint = null;
+        isDown = false;
+        points = [];
+      }
+
+      function getPos(evt) {
+        return {
+          x: evt.pageX,
+          y: evt.pageY,
+        };
+      }
+
+      function drawLine(beginPoint, controlPoint, endPoint) {
+        ctx.beginPath();
+        ctx.moveTo(beginPoint.x, beginPoint.y);
+        ctx.quadraticCurveTo(
+          controlPoint.x,
+          controlPoint.y,
+          endPoint.x,
+          endPoint.y
+        );
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      function drawRect(beginPoint, width, height) {
+        ctx.clearRect(0, 0, 800, 800);
+        rects.forEach((rect) => {
+          ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        });
+        ctx.beginPath();
+        ctx.strokeRect(beginPoint.x, beginPoint.y, width, height);
+        ctx.closePath();
+      }
+      function drawEllipse(beginPoint, width, height) {
+        ctx.clearRect(0, 0, 800, 800);
+        ellipse.forEach((rect) => {
+          ctx.beginPath();
+          ctx.ellipse(
+            rect.x,
+            rect.y,
+            rect.width,
+            rect.height,
+            0,
+            0,
+            Math.PI * 2
+          );
+          ctx.stroke();
+          ctx.closePath();
+        });
+        ctx.beginPath();
+        ctx.ellipse(
+          beginPoint.x,
+          beginPoint.y,
+          width,
+          height,
+          0,
+          0,
+          Math.PI * 2
+        );
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      var obj = {
+        a:10,
+        b:this.a + 10,
+        fn:function(){
+          return this.a;
+        }
+      }
+      console.log(obj.b.call(obj));
+    </script>
+  </body>
+</html>

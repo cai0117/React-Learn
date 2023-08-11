@@ -1,6 +1,5 @@
 function KeyboardInputManager() {
   this.events = {};
-
   if (window.navigator.msPointerEnabled) {
     //Internet Explorer 10 style
     this.eventTouchstart = "MSPointerDown";
@@ -15,22 +14,24 @@ function KeyboardInputManager() {
   this.listen();
 }
 
+//操作事件入栈
 KeyboardInputManager.prototype.on = function (event, callback) {
   if (!this.events[event]) {
     this.events[event] = [];
   }
   this.events[event].push(callback);
 };
-
+//执行事件
 KeyboardInputManager.prototype.emit = function (event, data) {
   var callbacks = this.events[event];
+  
   if (callbacks) {
     callbacks.forEach(function (callback) {
       callback(data);
     });
   }
 };
-
+//监听按钮事件并执行
 KeyboardInputManager.prototype.listen = function () {
   var self = this;
 
@@ -53,15 +54,13 @@ KeyboardInputManager.prototype.listen = function () {
   document.addEventListener("keydown", function (event) {
     var modifiers =
       event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
-    var mapped = map[event.which];
-
+    var mapped = map[event.which];//返回按键数字
     if (!modifiers) {
       if (mapped !== undefined) {
         event.preventDefault();
         self.emit("move", mapped);
       }
     }
-
     // R key restarts the game
     if (!modifiers && event.which === 82) {
       self.restart.call(self, event);
@@ -73,10 +72,10 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".restart-button", this.restart);
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
-  // Respond to swipe events
+  // Respond to swipe events 
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
-
+  //兼容移动端
   gameContainer.addEventListener(this.eventTouchstart, function (event) {
     if (
       (!window.navigator.msPointerEnabled && event.touches.length > 1) ||

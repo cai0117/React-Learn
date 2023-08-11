@@ -7,7 +7,7 @@
       window[vendors[x] + "CancelAnimationFrame"] ||
       window[vendors[x] + "CancelRequestAnimationFrame"];
   }
-
+  //自定义requestAnimationFrame函数
   if (!window.requestAnimationFrame) {
     window.requestAnimationFrame = function (callback) {
       var currTime = new Date().getTime();
@@ -19,7 +19,7 @@
       return id;
     };
   }
-
+  //自定义cancelAnimationFrame函数
   if (!window.cancelAnimationFrame) {
     window.cancelAnimationFrame = function (id) {
       clearTimeout(id);

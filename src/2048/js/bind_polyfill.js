@@ -8,4 +8,4 @@ Function.prototype.bind =
       }
       self.apply(target, args);
     };
-  };
+  };//版本兼容，IE无bind方法则自定义bind方法

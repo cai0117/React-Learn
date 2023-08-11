@@ -5,7 +5,7 @@
   ) {
     return;
   }
-
+  //以下均为自定义classList
   var prototype = Array.prototype,
     push = prototype.push,
     splice = prototype.splice,

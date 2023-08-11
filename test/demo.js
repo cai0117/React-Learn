@@ -42,9 +42,7 @@ function dispatchAction(queue, action) {
 
     // 环形链表操作
     // 例子： 3 -> 0 -> 1 -> 2 -> 3
-    // 转变为 4 -> 0 -> 1 -> 2 -> 3 -> 4  
-    
-    
+    // 转变为 4 -> 0 -> 1 -> 2 -> 3 -> 4
     // update 代表当前的 update，queue.pending.next 代表 第一个,
     // 即实现 从 3 -> 0 变为 4 -> 0 
     update.next = queue.pending.next;

@@ -1,3 +1,4 @@
+//执行器
 function HTMLActuator() {
   this.tileContainer = document.querySelector(".tile-container");
   this.scoreContainer = document.querySelector(".score-container");
@@ -7,6 +8,7 @@ function HTMLActuator() {
   this.score = 0;
 }
 
+//监听页面变化给出结果
 HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
 
@@ -44,7 +46,7 @@ HTMLActuator.prototype.clearContainer = function (container) {
     container.removeChild(container.firstChild);
   }
 };
-
+//执行添加元素操作
 HTMLActuator.prototype.addTile = function (tile) {
   var self = this;
 
